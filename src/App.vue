@@ -1,16 +1,16 @@
 <template>
   <v-app>
-    <v-app-bar>
+    <v-app-bar color="primary">
       <v-container class="d-flex align-center py-0">
         <v-app-bar-title class="pl-0">
           <div class="d-flex align-center">
             <v-avatar
               rounded="0"
               class="mr-3"
-              image="https://cdn.vuetifyjs.com/docs/images/logos/v.png"
+              image="src/assets/network.png"
             />
 
-            Vuetify 3
+            Antipatterns In Machine Learning Systems
           </div>
         </v-app-bar-title>
       </v-container>
@@ -20,7 +20,7 @@
       <RouterView />
     </v-main>
 
-    <v-footer>
+    <v-footer color="primary">
       <v-container class="text-overline d-flex align-center justify-space-between">
         <div>
           Copyright &copy; 2022 Vuetify, LLC
@@ -32,6 +32,6 @@
   </v-app>
 </template>
 
-<script>
+<script lang="ts">
   export default { name: 'App' }
 </script>

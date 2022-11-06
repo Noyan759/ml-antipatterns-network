@@ -3,7 +3,23 @@ import '@mdi/font/css/materialdesignicons.css'
 import 'vuetify/styles'
 
 // Vuetify
-import { createVuetify } from 'vuetify'
+import { createVuetify, type ThemeDefinition } from 'vuetify'
+
+const RWTHTheme: ThemeDefinition = {
+  dark: false,
+  colors: {
+    background: '#FFFFFF',
+    surface: '#FFFFFF',
+    primary: '#0072BB',
+    'primary-darken-1': '#00549F',
+    secondary: '#FFA500',
+    'secondary-darken-1': '#018786',
+    error: '#FF5252',
+    info: '#7DA7D9',
+    success: '#FFFFFF',
+    warning: '#FFC107',
+  }
+}
 
 export default createVuetify({
   // https://next.vuetifyjs.com/features/global-configuration/
@@ -24,14 +40,9 @@ export default createVuetify({
   },
   // https://next.vuetifyjs.com/features/theme/
   theme: {
-    defaultTheme: 'dark',
+    defaultTheme: 'RWTHTheme',
     themes: {
-      dark: {
-        dark: true,
-        colors: {
-          primary: '#1697f6',
-        }
-      }
+      RWTHTheme 
     }
   },
 })
