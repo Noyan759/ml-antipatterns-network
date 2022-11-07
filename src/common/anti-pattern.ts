@@ -1,5 +1,5 @@
 export class AntiPattern {
-    public name?: string;
+    public name: string;
     public aliases?: string[];
     public description?: string;
     public causes?: string;
@@ -13,7 +13,7 @@ export class AntiPattern {
     public relatedItems?: RelatedItem[];
     public relatedAntiPatterns?: RelatedAntiPattern[];
 
-    constructor(name?: string, aliases?: string[], description?: string, causes?: string, impact?: string,
+    constructor(name: string, aliases?: string[], description?: string, causes?: string, impact?: string,
                 category?: string, detectionStrategies?: string, mitigationStrategies?: string, sources?: string[],
                 tags?: string[], relatedItems?: RelatedItem[]) {
         this.name = name;
