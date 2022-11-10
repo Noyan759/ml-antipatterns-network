@@ -16,7 +16,7 @@ export default {
   "relatedItems": [
     {
       "relation": "relates",
-      "name": "Undeclared consumers"
+      "name": "Undeclared Consumers"
     }
   ]
 }

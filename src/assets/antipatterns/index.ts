@@ -17,7 +17,6 @@ import UnstableDataDependencies from './unstable_data_dependencies';
 export default [
     ActNowReflectNever,
     AISueprHero,
-    CorrectionCascades,
     DataLeakage,
     FeedbackLoops,
     DeadExperimentalCodePaths,
@@ -30,4 +29,5 @@ export default [
     FeatureEntanglement,
     UnstableDataDependencies,
     UndeclaredConsumers,
+    CorrectionCascades,
 ]
