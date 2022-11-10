@@ -9,9 +9,12 @@ export const getNodesAndEdges = (antipatterns: AntiPattern[]) => {
             name: antipattern.name
         }
         antipattern.relatedItems?.forEach((relatedItem: RelatedItem) => {
-            edges[`${antipattern.name}_${relatedItem.name}`] = {
-                source: relatedItem.name,
-                target: antipattern.name
+            if (relatedItem.relation !== "precedes") {
+                // Since follow-precede relation will require one way edge so will be handled in 'follows' relation
+                edges[`${antipattern.name}_${relatedItem.name}`] = {
+                    source: relatedItem.name,
+                    target: antipattern.name
+                }
             }
         })
     })

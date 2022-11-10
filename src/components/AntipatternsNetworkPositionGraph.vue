@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import type { PropType } from "vue"
+import type { PropType, Ref } from "vue"
+import { watch } from "vue"
 import { reactive } from "vue"
 import { ref } from "vue"
 import * as vNG from "v-network-graph"
-import type { AntiPattern, RelatedItem } from "@/common/anti-pattern"
-import type { Edges, Layouts, Nodes } from "v-network-graph"
+import type { AntiPattern } from "@/common/anti-pattern"
 import { getNodesAndEdges, nodeToLayouts } from "@/utils/network-graph"
 
 // Props
@@ -15,8 +15,11 @@ const props = defineProps({
   }
 })
 
-const { nodes, edges } = getNodesAndEdges(props.antipatterns);
-const layouts: Layouts = nodeToLayouts(nodes);
+let response = getNodesAndEdges(props.antipatterns);
+
+let nodes: Ref<vNG.Nodes> = ref(response.nodes)
+let edges: Ref<vNG.Edges> = ref(response.edges)
+const layouts: Ref<vNG.Layouts> = ref(nodeToLayouts(nodes.value));
 
 const configs = reactive(
   vNG.defineConfigs({
@@ -78,6 +81,30 @@ const configs = reactive(
 
 const zoomLevel = ref(1)
 
+const filters = ["All", "Connected", "Disconnected"];
+
+const selectedFilter = ref("All");
+
+const filterAntipatterns = (antipatterns: AntiPattern[], filter: string): AntiPattern[] => {
+  switch (filter) {
+    case "Connected": {
+      return antipatterns.filter((antipattern) => (antipattern.relatedItems && antipattern.relatedItems.length));
+    }
+    case "Disconnected": {
+      return antipatterns.filter((antipattern) => (!antipattern.relatedItems || !antipattern.relatedItems.length));
+    }
+    default: {
+      return antipatterns;
+    }
+  }
+}
+
+watch(selectedFilter, () => {
+  let res = getNodesAndEdges(filterAntipatterns(props.antipatterns, selectedFilter.value));
+  nodes.value = res.nodes;
+  edges.value = res.edges;
+  layouts.value = nodeToLayouts(nodes.value);
+});
 // ref="graph"
 const graph = ref<vNG.Instance>()
 </script>
@@ -85,24 +112,16 @@ const graph = ref<vNG.Instance>()
 <template>
   <div class="control-panel">
     <v-row justify="center">
-      <v-col md="3">
-        <v-row justify="space-around">
-          <v-btn @click="graph?.panToCenter()">To center</v-btn>
-          <v-btn @click="graph?.fitToContents()">Fit</v-btn>
-          <v-btn @click="graph?.zoomIn()">Zoom In</v-btn>
-          <v-btn @click="graph?.zoomOut()">Zoom Out</v-btn>
+      <v-col md="1">
+        <v-row>
+          <v-select :items="filters" v-model="selectedFilter" label="Filter"></v-select>
         </v-row>
       </v-col>
       <v-col md="1" />
-      <v-col md="4">
-        <v-row>
-          <v-list-subheader>Zoom slider</v-list-subheader>
-          <v-slider v-model="zoomLevel" class="align-center" :max="1" :min="16" hide-details>
-            <template v-slot:append>
-              <v-text-field v-model="zoomLevel" class="mt-0 pt-0" hide-details single-line type="number"
-                style="width: 60px"></v-text-field>
-            </template>
-          </v-slider>
+      <v-col md="2">
+        <v-row justify="space-around">
+          <v-btn @click="graph?.panToCenter()">To center</v-btn>
+          <v-btn @click="graph?.fitToContents()">Fit</v-btn>
         </v-row>
       </v-col>
     </v-row>
