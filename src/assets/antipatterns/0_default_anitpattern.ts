@@ -1,10 +1,10 @@
 export default {
   "name": "",
-  "aliases": [],
+  "aliases": [""],
   "description": "",
   "causes": "",
   "impact": "",
-  "category": "",
+  "category": [""],
   "detectionStrategies": "",
   "mitigationStrategies": "",
   "sources": [
